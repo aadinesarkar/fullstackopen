@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const Button = ({ onClick, text }) => {
 	return (
@@ -22,16 +22,16 @@ const Statistics = ({ good, neutral, bad }) => {
 		return (
 			<table>
 				<tbody>
-					<StatisticLine text="good" num={good} />
-					<StatisticLine text="neutral" num={neutral} />
-					<StatisticLine text="bad" num={bad} />
-					<StatisticLine text="total" num={good + neutral + bad} />
+					<StatisticLine text='good' num={good} />
+					<StatisticLine text='neutral' num={neutral} />
+					<StatisticLine text='bad' num={bad} />
+					<StatisticLine text='total' num={good + neutral + bad} />
 					<StatisticLine
-						text="average"
+						text='average'
 						num={(1 * good + 0 * neutral - 1 * bad) / (good + neutral + bad)}
 					/>
 					<StatisticLine
-						text="positive %"
+						text='positive %'
 						num={(good * 100) / (good + neutral + bad)}
 					/>
 				</tbody>
@@ -54,9 +54,9 @@ const App = () => {
 	return (
 		<>
 			<h1>Give Feedback</h1>
-			<Button onClick={handleClick(good, setGood)} text="good" />
-			<Button onClick={handleClick(neutral, setNeutral)} text="neutral" />
-			<Button onClick={handleClick(bad, setBad)} text="bad" />
+			<Button onClick={handleClick(good, setGood)} text='good' />
+			<Button onClick={handleClick(neutral, setNeutral)} text='neutral' />
+			<Button onClick={handleClick(bad, setBad)} text='bad' />
 			<h1>Statistics</h1>
 			<Statistics good={good} neutral={neutral} bad={bad} />
 		</>
