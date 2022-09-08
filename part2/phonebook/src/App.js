@@ -49,6 +49,12 @@ const App = () => {
 		}
 	};
 
+	const handleDeletion = (person) => {
+		if (window.confirm(`Delete ${person.name}?`)) {
+			services.remove(person.id);
+		}
+	};
+
 	const namesToShow = showAll
 		? persons
 		: persons.filter((person) =>
@@ -68,7 +74,7 @@ const App = () => {
 				handleChangeNumber={handleChangeNumber}
 			/>
 			<h2>Numbers</h2>
-			<Persons namesToShow={namesToShow} />
+			<Persons namesToShow={namesToShow} handleDeletion={handleDeletion} />
 		</div>
 	);
 };
