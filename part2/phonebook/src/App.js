@@ -51,7 +51,11 @@ const App = () => {
 
 	const handleDeletion = (person) => {
 		if (window.confirm(`Delete ${person.name}?`)) {
-			services.remove(person.id);
+			services.remove(person.id).then((response) => {
+				services.getAll().then((response) => {
+					setPersons(response);
+				});
+			});
 		}
 	};
 
