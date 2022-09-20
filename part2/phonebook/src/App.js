@@ -3,6 +3,7 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import services from './components/services';
+import Notification from './components/Notification';
 
 const App = () => {
 	const [persons, setPersons] = useState([]);
@@ -10,6 +11,8 @@ const App = () => {
 	const [newNumber, setNewNumber] = useState('');
 	const [newFilter, setNewFilter] = useState('');
 	const [showAll, setShowAll] = useState(true);
+	const [successMessage, setSuccessMessage] = useState(null);
+	const [errorMessage, setErrorMessage] = useState(null);
 
 	useEffect(() => {
 		services.getAll().then((response) => {
@@ -45,13 +48,30 @@ const App = () => {
 					name: newName,
 					number: newNumber,
 				};
-				services.update(id, updatedPerson).then((response) => {
-					setPersons(
-						persons.map((person) => (person.id === id ? response : person))
-					);
-					setNewName('');
-					setNewNumber('');
-				});
+				services
+					.update(id, updatedPerson)
+					.then((response) => {
+						setPersons(
+							persons.map((person) => (person.id === id ? response : person))
+						);
+						setNewName('');
+						setNewNumber('');
+						setSuccessMessage(`Updated ${response.name}`);
+						setTimeout(() => {
+							setSuccessMessage(null);
+						}, 5000);
+					})
+					.catch((error) => {
+						setNewName('');
+						setNewNumber('');
+						setErrorMessage(
+							`Information of ${updatedPerson.name} has already been removed from server`
+						);
+						setTimeout(() => {
+							setErrorMessage(null);
+						}, 5000);
+						setPersons(persons.filter((p) => p.id !== id));
+					});
 			}
 		} else {
 			const newPerson = {
@@ -59,10 +79,13 @@ const App = () => {
 				number: newNumber,
 			};
 			services.create(newPerson).then((response) => {
-				console.log(response);
 				setPersons(persons.concat(response));
 				setNewName('');
 				setNewNumber('');
+				setSuccessMessage(`Added ${response.name}`);
+				setTimeout(() => {
+					setSuccessMessage(null);
+				}, 5000);
 			});
 		}
 	};
@@ -84,6 +107,8 @@ const App = () => {
 	return (
 		<div>
 			<h1>Phonebook</h1>
+			<Notification message={successMessage} color={'green'} />
+			<Notification message={errorMessage} color={'red'} />
 			<Filter newFilter={newFilter} handleChangeFilter={handleChangeFilter} />
 			<h2>Add a new</h2>
 			<PersonForm
