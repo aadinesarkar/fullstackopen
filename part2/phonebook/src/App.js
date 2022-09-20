@@ -36,7 +36,7 @@ const App = () => {
 		event.preventDefault();
 		if (persons.some((person) => person.name === newName)) {
 			if (
-				window.alert(
+				window.confirm(
 					`${newName} is already added to phonebook, replace the old number with a new one?`
 				)
 			) {
@@ -46,7 +46,6 @@ const App = () => {
 					number: newNumber,
 				};
 				services.update(id, updatedPerson).then((response) => {
-					console.log(response);
 					setPersons(
 						persons.map((person) => (person.id === id ? response : person))
 					);
@@ -60,7 +59,8 @@ const App = () => {
 				number: newNumber,
 			};
 			services.create(newPerson).then((response) => {
-				setPersons(persons.concat(newPerson));
+				console.log(response);
+				setPersons(persons.concat(response));
 				setNewName('');
 				setNewNumber('');
 			});
@@ -70,9 +70,7 @@ const App = () => {
 	const handleDeletion = (person) => {
 		if (window.confirm(`Delete ${person.name}?`)) {
 			services.remove(person.id).then((response) => {
-				services.getAll().then((response) => {
-					setPersons(response);
-				});
+				setPersons(persons.filter((p) => p.id !== person.id));
 			});
 		}
 	};
