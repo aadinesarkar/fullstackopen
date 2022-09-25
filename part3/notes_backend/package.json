@@ -5,16 +5,18 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",
-		"dev": "nodemon index.js",
+		"dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Aadi Nesarkar",
 	"license": "MIT",
 	"dependencies": {
 		"cors": "^2.8.5",
-		"express": "^4.18.1"
+		"express": "^4.18.1",
+		"mongoose": "^6.6.1"
 	},
 	"devDependencies": {
+		"dotenv": "^16.0.2",
 		"nodemon": "^2.0.19"
 	}
 }
