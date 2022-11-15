@@ -6,7 +6,8 @@
 	"scripts": {
 		"start": "node index.js",
 		"dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint ."
 	},
 	"author": "Aadi Nesarkar",
 	"license": "MIT",
@@ -17,6 +18,7 @@
 	},
 	"devDependencies": {
 		"dotenv": "^16.0.2",
+		"eslint": "^8.27.0",
 		"nodemon": "^2.0.19"
 	}
 }

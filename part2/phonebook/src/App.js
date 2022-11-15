@@ -78,15 +78,25 @@ const App = () => {
 				name: newName,
 				number: newNumber,
 			};
-			services.create(newPerson).then((response) => {
-				setPersons(persons.concat(response));
-				setNewName('');
-				setNewNumber('');
-				setSuccessMessage(`Added ${response.name}`);
-				setTimeout(() => {
-					setSuccessMessage(null);
-				}, 5000);
-			});
+			services
+				.create(newPerson)
+				.then((response) => {
+					setPersons(persons.concat(response));
+					setNewName('');
+					setNewNumber('');
+					setSuccessMessage(`Added ${response.name}`);
+					setTimeout(() => {
+						setSuccessMessage(null);
+					}, 5000);
+				})
+				.catch((error) => {
+					setNewName('');
+					setNewNumber('');
+					setErrorMessage(error.response.data.error);
+					setTimeout(() => {
+						setErrorMessage(null);
+					}, 5000);
+				});
 		}
 	};
 
